@@ -1,5 +1,6 @@
 rm(list=ls())
 setwd("C:/Users/nesoltis/Desktop/imageAnalaysis_DK/05_FeatureCalc")
+setwd("~/Projects/gonst2/images/05_FeatureCalc")
 
 #install EBImage and CRImage (only need to do this once per R installation)
 #source("https://bioconductor.org/biocLite.R")
@@ -62,9 +63,9 @@ label4Nicole <- function(orig.label , image.f = RawFiles[f]){
 #----------------------------------------------------------------------
 
 
-RawFiles <- list.files(pattern = "h.JPG")
-LeafMaskFiles <- list.files(pattern= "LeafMask.JPG")
-LesionMaskFiles <- list.files(pattern="LesionMask.JPG")
+RawFiles <- list.files(pattern = ".JPG")
+LeafMaskFiles <- list.files(pattern= "LeafMask.tif")
+LesionMaskFiles <- list.files(pattern="LesionMask.tif")
 
 if(length(RawFiles) == length(LeafMaskFiles) & length(RawFiles) == length(LesionMaskFiles)) {
   for(f in 1:length(RawFiles)) {
@@ -230,7 +231,7 @@ if(length(RawFiles) == length(LeafMaskFiles) & length(RawFiles) == length(Lesion
     rownames(Results) <- Key[,2][Filtered]
     Results <- cbind(RawFiles[f], Results)
     colnames(Results)[1] <- "Image"
-    write.csv(Results, paste(gsub("h.JPG","h_Results.csv",RawFiles[f])))
+    write.csv(Results, paste(gsub(".JPG","_Results.csv",RawFiles[f])))
     
     
   }
@@ -240,7 +241,7 @@ if(length(RawFiles) == length(LeafMaskFiles) & length(RawFiles) == length(Lesion
 #---------------------------------------------------------------------
 #PRINT IMAGE LABELS FROM VIVIAN SCRIPT
 
-RawFiles <- list.files(pattern = "h.JPG")
+RawFiles <- list.files(pattern = ".JPG")
 ResultsFiles <- list.files(pattern="Results.csv")
 
 #RawFiles <- "208b_08b.JPG"
@@ -260,7 +261,7 @@ label4Nicole(orig.label,RawFiles[f])
 
 # test code 
 labels <- read.csv(ResultsFiles[f] )
-label4Nicole(labels,gsub("h.JPG","h_LeafLabel.jpg",RawFiles[f]))
+label4Nicole(labels,gsub(".JPG","_LeafLabel.jpg",RawFiles[f]))
 	}
 }
 
