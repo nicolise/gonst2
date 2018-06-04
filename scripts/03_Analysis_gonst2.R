@@ -22,8 +22,16 @@ plot(ModDat$Lesion.Size.cm ~ ModDat$Genotype)
 #linear model
 names(ModDat)
 ModDat <- ModDat[ModDat$Isolate!="Control",]
+ModDat$Iso.Geno <- paste(ModDat$Isolate, ModDat$Genotype, sep="_")
 ModDat.96 <- ModDat[ModDat$Time=="96",]
 ModDat.72 <- ModDat[ModDat$Time=="72",]
+
+#how many observations per genotype combination?
+ModDat.72.G1 <- ModDat.72[ModDat.72$Tray=="G1",]
+table(ModDat.72.G1$Iso.Geno)
+ModDat.72.G2 <- ModDat.72[ModDat.72$Tray=="G2",]
+table(ModDat.72.G2$Iso.Geno)
+table(ModDat.96$Iso.Geno)
 
 mymod.72 <- lm(Lesion.Size.cm ~ Isolate * Genotype + Tray + Tray/Flat + Tray:Genotype + Tray:Isolate, data=ModDat.72)
 anova(mymod.72)
